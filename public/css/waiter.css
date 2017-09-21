@@ -1,0 +1,20 @@
+body{
+  background-color: white;
+
+}
+
+h1{
+  background-color: Black;
+  color: white;
+  text-align: center;
+}
+
+.week {
+  margin-left: 434px;
+  margin-top: 90px;
+}
+
+span{
+  font-size: 8px
+  color: black
+}

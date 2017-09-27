@@ -1,7 +1,7 @@
-<form class='entry' action='/waiterDays/name' method='post'>
+<form class='entry' action='/waiterDays/{{username}}' method='post'>
 <h1> Choose days to work! </h1>
 
-Hello, please select your days <span>{{output}}</span>
+Hello, please select your days <span style="color:red">{{username}}</span>
 
 <div class='week'>
 <input type="checkbox" name="week" value="Sunday">Sunday<br>
@@ -12,6 +12,10 @@ Hello, please select your days <span>{{output}}</span>
 <input type="checkbox" name="week" value="Friday">Friday<br>
 <input type="checkbox" name="week" value="Saturday">Saturday<br><br>
 <input type='submit' value='Submit'> </input>
+
+<div class='message'>
+{{message.error}}
+</div>
 
 </div>
 </form>

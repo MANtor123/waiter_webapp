@@ -18,3 +18,8 @@ span{
   font-size: 15px
   font-weight : bold;
 }
+
+table th{
+  text-align: center;
+  border: 1px solid black;
+}

@@ -128,10 +128,10 @@ app.post('/waiterDays/:username', function(req, res) {
                       console.log(err);
                     }
 
-                   else {
-
-                    res.redirect('/waiterDays:username')
-                  }
+                  //  else {
+                  //
+                  //   res.redirect('/waiterDays:username')
+                  // }
 
 
                 })
@@ -142,20 +142,9 @@ app.post('/waiterDays/:username', function(req, res) {
                   // req.flash('error','Days has been successfuly updated');
                   // res.redirect('/waiterDays');
                   res.render('workSch', {
-                    scheduleDays : username + week
+                    scheduleDays : username
                   })
                   }
-
-              // if (results) {
-              //   waiterLits.push(username)
-              //   console.log(waiterLits);
-              // }
-
-
-              // else {
-
-              // }
-            // })
 
 
           }

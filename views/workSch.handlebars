@@ -3,6 +3,7 @@
 <table>
   <tr>
   <th>Sunday</th>
+
   <th>Monday</th>
   <th>Tuesday</th>
   <th>Wednesday</th>
@@ -10,6 +11,54 @@
   <th>Friday</th>
   <th>Saturday</th>
 </tr>
-{{scheduleDays}}
+<tr>
+  <td>
+{{#each Sunday}}
+<li>{{this.days}}</li>
+{{/each}}
+  </td>
+
+  <td>
+{{#each Monday}}
+<li>{{this.days}}</li>
+{{/each}}
+  </td>
+
+  <td>
+{{#each Tuesday}}
+<li>{{this.days}}</li>
+{{/each}}
+  </td>
+
+  <td>
+{{#each Wednesday}}
+<li>{{scheduleDays}}</li>
+<li>{{this.days}}</li>
+{{/each}}
+  </td>
+
+  <td>
+{{#each Thursday}}
+<li>{{scheduleDays}}</li>
+<li>{{this.days}}</li>
+{{/each}}
+  </td>
+
+  <td>
+{{#each Friday}}
+<li>{{scheduleDays}}</li>
+<li>{{this.days}}</li>
+{{/each}}
+  </td>
+
+  <td>
+{{#each Saturday}}
+<li>{{scheduleDays}}</li>
+<li>{{this.days}}</li>
+{{/each}}
+  </td>
+
+</tr>
+
 </table>
 </form>

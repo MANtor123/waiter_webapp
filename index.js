@@ -1,5 +1,3 @@
-'use strict';
-
 var express = require('express');
 var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser');
@@ -24,19 +22,10 @@ mongoose.connect(mongoURL, function(err) {
 });
 
 
+'use strict';
 var waiterSche = mongoose.model('waiterSche', {
-  name: String,
-  days: {
-    Sunday: Boolean,
-    Monday: Boolean,
-    Tuesday: Boolean,
-    Wednesday: Boolean,
-    Thursday: Boolean,
-    Friday: Boolean,
-    Saturday: Boolean
-  }
-
-
+  username: String,
+  days: Array
 });
 // console.log(waiterSche.find());
 
@@ -52,117 +41,128 @@ app.use(express.static('public'))
 
 
 
-app.get('/waiterDays/:username', function(req, res) {
-  var username = req.params.username
-//console.log(username);
+app.get('/waiterDays/:username', function(req, res, done) {
+  var username = req.params.username;
 
-  waiterSche.findOne({name: username}, function(err,results){
-    if(err){
+  waiterSche.findOne({
+    username: username
+  }, function(err, results) {
+    if (err) {
       console.log(err);
+    } else if (!results) {
+      waiterSche.create({
+        username: username,
+        days: []
+      });
     }
+  });
+  res.render('index', {
+    username: username
+  });
 
-    else{
-      if (!results) {
-        //console.log(!results);
-      res.render('index', {
-        username : username
-
-      })
-    }
-
-    else {
-      res.render('index', {
-        username : username
-        //output : username
-      })
-
-
-    }
-
-}
-  })
-
-})
+});
 
 var waiterLits = {};
 
-app.post('/waiterDays/:username', function(req, res) {
-      var username = req.params.username
-      console.log(username);
-      var week = req.body.week
-      console.log(week);
+app.post('/waiterDays/:username', function(req, res, done) {
+  var username = req.params.username
+  var week = req.body.week;
 
+  waiterSche.findOneAndUpdate({
+    username: username
+  }, {
+    days: week
+  }, function(err, results) {
+    //console.log(results);
+    if (err) {
+      return done(err)
+    }
 
-      if(!Array.isArray(week)){
-        week = [week];
-      }
+    if (results === null || results === '') {
+      console.log('cannot add blank row');
+      return results;
+    }
+    // res.render('workSch', {
+    //   username: username
+    // });
+    res.redirect('/days')
+  });
 
-      week.forEach(function(day) {
-        waiterLits[week] = true
-      })
+});
 
-      // var waiterSchedule = {
-      //   name: username,
-      //   days: week
-      // }
+app.get('/days', function(req, res, next) {
 
-      waiterSche.findOneAndUpdate({
-            name: username
-          }, {
-            days: waiterLits
-          },
-          function(err, results) {
-            if (err) {
-              console.log(err);
-            } else {
-              if (!results) {
-                var newWaiter = new waiterSche({
-                  name: username,
-                  days: waiterLits
-                })
+  var Sunday = [];
+  var Monday = [];
+  var Tuesday = [];
+  var Wednesday = [];
+  var Thursday = [];
+  var Friday = [];
+  var Saturday = [];
 
+  waiterSche.find({}, function(err, results) {
+    if (err) {
+      return next(err)
+    } else {
 
+      console.log(results);
 
-                newWaiter.save(function(err, results) {
-                    if (err) {
-                      console.log(err);
-                    }
+      for (var i = 0; i < results.length; i++) {
 
-                  //  else {
-                  //
-                  //   res.redirect('/waiterDays:username')
-                  // }
+        console.log("*******");
+        var username = results[i].username
+        var curWaiterDays = results[i].days;
+        console.log(username);
+        console.log(curWaiterDays);
 
+        for (var ii = 0; ii < curWaiterDays.length; ii++) {
 
-                })
-
-                  }
-
-                else {
-                  // req.flash('error','Days has been successfuly updated');
-                  // res.redirect('/waiterDays');
-                  res.render('workSch', {
-                    scheduleDays : username
-                  })
-                  }
-
-
+          if (curWaiterDays[ii] === 'Sunday'){
+            Sunday.push(username);
           }
-        })
-        });
+          if (curWaiterDays[ii] === 'Monday') {
+            Monday.push(username)
+          }
+          if (curWaiterDays[ii] === 'Tuesday') {
+            Tuesday.push(username)
+          }
+         if (curWaiterDays[ii] === 'Wednesday') {
+            Wednesday.push(username)
+          }
+          if (curWaiterDays[ii] === 'Thursday') {
+            Thursday.push(username)
+          }
+          if (curWaiterDays[ii] === 'Friday') {
+            Friday.push(username)
+          }
+          if (curWaiterDays[ii] === 'Saturday') {
+            Saturday.push(username)
+          }
+
+        }
+      }
+    };
 
 
+    res.render('workSch', {
+      Sunday: Sunday,
+      Monday: Monday,
+      Tuesday: Tuesday,
+      Wednesday: Wednesday,
+      Thursday: Thursday,
+      Friday: Friday,
+      Saturday: Saturday
 
-          app.post('/days', function(res, req) {
+    });
+  })
+});
 
-            res.redirect('/waiterDays/:username')
-          })
 
+const port = process.env.PORT || 8000;
+app.use(function(err, req, res, next) {
+  res.status(500).send(err.stack);
+})
 
-          const port = process.env.PORT || 8000; app.use(function(err, req, res, next) {
-            res.status(500).send(err.stack);
-          })
-
-          app.listen(port, function() {
-            console.log('Example app listening at :' + port)
-          });
+app.listen(port, function() {
+  console.log('Example app listening at :' + port)
+});

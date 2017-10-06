@@ -23,3 +23,15 @@ table th{
   text-align: center;
   border: 1px solid black;
 }
+
+.green{
+  background-color: green;
+}
+
+.red{
+  background-color: red;
+}
+
+.orange{
+  background-color: orange;
+}

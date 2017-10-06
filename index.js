@@ -92,6 +92,15 @@ app.post('/waiterDays/:username', function(req, res, done) {
 
 app.get('/days', function(req, res, next) {
 
+  function background(colors){
+    if(colors = 3){
+      days.class.add('green')
+    }
+    
+  }
+
+
+
   var Sunday = [];
   var Monday = [];
   var Tuesday = [];

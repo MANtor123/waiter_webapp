@@ -92,11 +92,20 @@ app.post('/waiterDays/:username', function(req, res, done) {
 
 app.get('/days', function(req, res, next) {
 
-  function background(colors){
-    if(colors = 3){
-      days.class.add('green')
+  function background(weekdayColor){
+
+      if(weekdayColor === 3){
+      return 'green'
+
     }
-    
+
+    if(weekdayColor > 3 ){
+      return 'red'
+    }
+
+    if(weekdayColor < 3){
+      return 'orange'
+    }
   }
 
 
@@ -114,15 +123,14 @@ app.get('/days', function(req, res, next) {
       return next(err)
     } else {
 
-      console.log(results);
+
 
       for (var i = 0; i < results.length; i++) {
 
-        console.log("*******");
+
         var username = results[i].username
         var curWaiterDays = results[i].days;
-        console.log(username);
-        console.log(curWaiterDays);
+
 
         for (var ii = 0; ii < curWaiterDays.length; ii++) {
 
@@ -155,17 +163,36 @@ app.get('/days', function(req, res, next) {
 
     res.render('workSch', {
       Sunday: Sunday,
+      sundayColor: background(Sunday.length),
       Monday: Monday,
+      mondayColor: background(Monday.length),
       Tuesday: Tuesday,
+      tuesdayColor: background(Tuesday.length),
       Wednesday: Wednesday,
+      wednesdayColor: background(Wednesday.length),
       Thursday: Thursday,
+      thursdayColor: background(Thursday.length),
       Friday: Friday,
-      Saturday: Saturday
+      fridayColor: background(Friday.length),
+      Saturday: Saturday,
+      saturdayColor: background(Saturday.length)
 
     });
   })
 });
 
+app.post('/clear', function(req, res) {
+  waiterSche.remove({}, function(err, remove) {
+if (err) {
+  console.log(err);
+}
+else {
+
+  res.render('workSch')
+}
+
+  })
+});
 
 const port = process.env.PORT || 8000;
 app.use(function(err, req, res, next) {

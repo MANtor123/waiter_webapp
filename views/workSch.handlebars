@@ -1,57 +1,71 @@
 <form class='entry' action='/days' method='post'>
 <h1> Work Schedule </h1>
-<table>
+<table class='table' align="center">
   <tr>
-  <th>Sunday</th>
+  <th class='weekdays'>Sunday</th>
 
-  <th>Monday</th>
-  <th>Tuesday</th>
-  <th>Wednesday</th>
-  <th>Thursday</th>
-  <th>Friday</th>
-  <th>Saturday</th>
+  <th class='weekdays'>Monday</th>
+  <th class='weekdays'>Tuesday</th>
+  <th class='weekdays'>Wednesday</th>
+  <th class='weekdays'>Thursday</th>
+  <th class='weekdays'>Friday</th>
+  <th class='weekdays'>Saturday</th>
 </tr>
 <tr>
-  <td>
+  <td class='{{sundayColor}}'>
 
 {{#each Sunday}}
-<li>{{this}}</li>
+<ul>
+{{this}}
+</ul>
 {{/each}}
   </td>
 
-  <td>
+  <td class='{{mondayColor}}'>
 {{#each Monday}}
-<li>{{this}}</li>
+<ul>
+{{this}}
+</ul>
 {{/each}}
   </td>
 
-  <td>
+  <td class='{{tuesdayColor}}'>
 {{#each Tuesday}}
-<li>{{this}}</li>
+<ul>
+{{this}}
+</ul>
 {{/each}}
   </td>
 
-  <td>
+  <td class='{{wednesdayColor}}'>
 {{#each Wednesday}}
-<li>{{this}}</li>
+<ul>
+{{this}}
+</ul>
 {{/each}}
   </td>
 
-  <td>
+  <td class='{{thursdayColor}}'>
 {{#each Thursday}}
-<li>{{this}}</li>
+<ul>
+{{this}}
+</ul>
 {{/each}}
   </td>
 
-  <td>
+  <td class='{{fridayColor}}'>
 {{#each Friday}}
-<li>{{this}}</li>
+<ul>
+{{this}}
+</ul>
 {{/each}}
   </td>
 
-  <td>
+  <td class='{{saturdayColor}}'>
 {{#each Saturday}}
-<li>{{this}}</li>
+<ul>
+{{this}}
+</ul>
 {{/each}}
   </td>
 
@@ -61,4 +75,11 @@
 <div class='red'> </div>
 <div class='orange'> </div>
 {{waiterLits}}
+</form>
+
+<form class='entry' action='/clear' method='post'>
+
+  <input class='clear' type='submit' value='Clear_Database'></input>
+
+
 </form>
